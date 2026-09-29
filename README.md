@@ -7,4 +7,4 @@ docker compose up --build -d
 Set-Content -Path body.json -Value '{"url": "https://example.com"}' -Encoding ascii
 
 *Example*
-![alt text]({Screen}.png)
+![alt text](Screen.png)
