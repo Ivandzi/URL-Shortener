@@ -1,0 +1,74 @@
+basePath: /
+definitions:
+  main.ShortenRequest:
+    properties:
+      url:
+        type: string
+    type: object
+host: Localhost:8080
+info:
+  contact: {}
+  description: A link shortening service with caching in Redis
+  title: URL Shortener API
+  version: "1.0"
+paths:
+  /resolve/{code}:
+    get:
+      description: It accepts a short code and redirects to the original URL
+      parameters:
+      - description: Short code
+        in: path
+        name: code
+        required: true
+        type: string
+      responses:
+        "302":
+          description: Redirect
+          schema:
+            type: string
+        "400":
+          description: Empty code
+          schema:
+            type: string
+        "404":
+          description: Code not found
+          schema:
+            type: string
+        "500":
+          description: Internal error
+          schema:
+            type: string
+      summary: redirect using a short code
+      tags:
+      - urls
+  /shorten:
+    post:
+      consumes:
+      - application/json
+      description: It takes the original URL and returns a short code
+      parameters:
+      - description: Original URL
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.ShortenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Short code
+          schema:
+            type: string
+        "400":
+          description: Invalid JSON or empty URL
+          schema:
+            type: string
+        "500":
+          description: Database error
+          schema:
+            type: string
+      summary: create a short link
+      tags:
+      - urls
+swagger: "2.0"
