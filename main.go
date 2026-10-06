@@ -107,6 +107,7 @@ func (r *Repository) ShortenHandler(w http.ResponseWriter, httpReq *http.Request
 	err = json.NewDecoder(httpReq.Body).Decode(&req)
 	if err != nil {
 		http.Error(w, "invalid JSON", http.StatusBadRequest)
+		log.Printf("Decoding error: %v", err)
 		return
 	}
 	if req.URL == "" {
